@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+*.egg-info/
+dist/
+build/
+
+# Data files
+data/
+pdfs/
+*.db
+*.sqlite
+
+# Ollama models
+models/ollama/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.thumbs.db
+Thumbs.db

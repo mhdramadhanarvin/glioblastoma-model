@@ -1,0 +1,231 @@
+{
+  "main": {
+    "id": "b52940ede0c5a701",
+    "type": "split",
+    "children": [
+      {
+        "id": "9cc44c7c3c7c2ec2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "550b8e0f7c233f19",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "data/markdown/008_2013_Network_Signatures_of_Survival_in_Glioblastoma_Multiforme.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "008_2013_Network_Signatures_of_Survival_in_Glioblastoma_Multiforme"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e5e9a1aac99cf6a8",
+    "type": "split",
+    "children": [
+      {
+        "id": "f69f3712c9cb9c00",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "161e93d638fe6df2",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "f8505670f33f2092",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "6aa343da3aca4c3d",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "0d8d4ba28b82892a",
+    "type": "split",
+    "children": [
+      {
+        "id": "8bb9e3322f00e717",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d3751976fc37521d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "data/markdown/008_2013_Network_Signatures_of_Survival_in_Glioblastoma_Multiforme.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "246bff8e87bed49d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "data/markdown/008_2013_Network_Signatures_of_Survival_in_Glioblastoma_Multiforme.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "c319ecd464d3e494",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "b49e9f501607e7f7",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "1d3ca5976c709cc0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "data/markdown/008_2013_Network_Signatures_of_Survival_in_Glioblastoma_Multiforme.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "550b8e0f7c233f19",
+  "lastOpenFiles": [
+    "src/rag_query.py.tmp.4101852.7827f9c96afc",
+    "src/knowledge_indexer.py.tmp.4101852.659f59ec2478",
+    "src/knowledge_indexer.py.tmp.4101852.c9e9713b760b",
+    "data/markdown/001_2012_The_Impact_of_Phenotypic_Switching_on_Glioblastoma_Growth_and_Invasion.md",
+    "pdfs/170_2025_Shaping_the_glioblastoma_microenvironment_to_enhance_CAR_NK_immunotherapy.pdf",
+    "pdfs/169_2026_Treatment_challenges_in_glioblastoma_a_case_report.pdf",
+    "pdfs/168_2021_SUMOylation_Regulator_Related_Molecules_Can_Be_Used_as_Prognostic_Biomarkers_for.pdf",
+    "pdfs/167_2023_Oncolytic_herpes_simplex_viruses_for_the_treatment_of_glioma_and_targeting_gliob.pdf",
+    "pdfs/166_2019_Dexamethasone_in_Glioblastoma_Multiforme_Therapy_Mechanisms_and_Controversies.pdf",
+    "pdfs/165_2021_Glycolysis_and_Fatty_Acid_Oxidation_Inhibition_Improves_Survival_in_Glioblastoma.pdf",
+    "pdfs/164_2021_Initial_Condition_Assessment_for_Reaction_Diffusion_Glioma_Growth_Models_A_Trans.pdf",
+    "pdfs/163_2025_Fructose_1_6_bisphosphatase_1_is_a_potential_biomarker_affecting_the_malignant_p.pdf",
+    "data/markdown/147_2026_NF_B_NFAT_signaling_contributes_to_B7_H3_TRuC_T_cell_cytotoxicity_and_supports_a.md",
+    "data/markdown/146_2018_Negative_Survival_Impact_of_High_Radiation_Doses_to_Neural_Stem_Cells_Niches_in.md",
+    "data/markdown/145_2023_The_role_of_cell_membrane_coated_nanoparticles_as_a_novel_treatment_approach_in.md",
+    "data/markdown/144_2026_Integrative_Transcriptomic_Analysis_Reveals_Synaptic_Pathway_Enriched_Prognostic.md",
+    "data/markdown/143_2023_Case_report_Regression_of_Glioblastoma_after_flavivirus_infection.md",
+    "data/markdown/142_2019_An_Inflammatory_Landscape_for_Preoperative_Neurologic_Deficits_in_Glioblastoma.md",
+    "data/markdown/141_2022_Alterations_in_white_matter_fiber_density_associated_with_structural_MRI_and_met.md",
+    "data/markdown/140_2024_Postoperative_glioblastoma_segmentation_Development_of_a_fully_automated_pipelin.md",
+    "data/markdown/139_2013_Travelling_wave_analysis_of_a_mathematical_model_of_glioblastoma_growth.md",
+    "data/markdown/138_2024_Overcoming_challenges_of_translating_deep_learning_models_for_glioblastoma_the_Z.md",
+    "data/markdown/137_2021_Pattern_Detection_on_Glioblastoma_s_Waddington_landscape_via_Generative_Adversar.md",
+    "data/markdown/136_2013_Identifying_cancer_subtypes_in_glioblastoma_by_combining_genomic_transcriptomic.md",
+    "data/markdown/135_2024_MRI_Radiomics_for_IDH_Genotype_Prediction_in_Glioblastoma_Diagnosis.md",
+    "data/markdown/134_2021_Glioblastoma_Multiforme_Patient_Survival_Prediction.md",
+    "data/markdown/133_2021_A_Glioblastoma_PDE_ODE_model_including_chemotaxis_and_vasculature.md",
+    "data/markdown/132_2026_Segmentation_Robustness_and_Predictive_Utility_in_Glioblastoma_Radiomics_Evidenc.md",
+    "data/markdown/131_1999_Locomotion_and_proliferation_of_glioblastoma_cells_in_vitro_statistical_evaluati.md",
+    "data/markdown/130_2024_Radiogenomic_biomarkers_for_immunotherapy_in_glioblastoma_A_systematic_review_of.md",
+    "data/markdown/129_2022_Data_driven_spatio_temporal_modelling_of_glioblastoma.md",
+    "data/markdown/128_2019_Radiopathomics_Integration_of_radiographic_and_histologic_characteristics_for_pr.md",
+    "data/markdown/127_2025_Decoding_MGMT_Methylation_A_Step_Towards_Precision_Medicine_in_Glioblastoma.md",
+    "data/markdown/126_2024_Deep_Learning_Based_Automated_Post_Operative_Gross_Tumor_Volume_Segmentation_in.md",
+    "data/markdown/125_2011_Evaluation_of_a_Novel_Approach_for_Automatic_Volume_Determination_of_Glioblastom.md",
+    "data/markdown/124_2006_Directionality_of_glioblastoma_invasion_in_a_3d_in_vitro_experiment.md",
+    "Untitled.canvas"
+  ]
+}
