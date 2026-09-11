@@ -20,7 +20,7 @@ os.environ["OTEL_SDK_DISABLED"] = "true"
 class OllamaEmbeddingFunction(EmbeddingFunction):
     """Wrapper for OllamaEmbeddings that matches Chroma's interface."""
 
-    def __init__(self, model_name: str = "mistral"):
+    def __init__(self, model_name: str = "nomic-embed-text"):
         self.embeddings = OllamaEmbeddings(model=model_name)
 
     def __call__(self, input: List[str]) -> List[List[float]]:
@@ -37,7 +37,7 @@ class OllamaEmbeddingFunction(EmbeddingFunction):
 
 
 class MedicalRAG:
-    def __init__(self, index_dir: str, model_name: str = "mistral"):
+    def __init__(self, index_dir: str, model_name: str = "nomic-embed-text"):
         self.index_dir = Path(index_dir)
         self.model_name = model_name
         self.embedding_function = OllamaEmbeddingFunction(model_name)
@@ -56,9 +56,9 @@ class MedicalRAG:
             self.vectorstore = Chroma(
                 persist_directory=str(self.index_dir),
                 embedding_function=self.embedding_function,
-                collection_name="medical_knowledge"
+                collection_name="medical_knowledge",
             )
-            print(f"✓ Index loaded")
+            print("✓ Index loaded")
             return True
         except Exception as e:
             print(f"Error loading index: {e}")
@@ -84,15 +84,14 @@ Question: {question}
 Answer:"""
 
         prompt = PromptTemplate(
-            template=template,
-            input_variables=["context", "question"]
+            template=template, input_variables=["context", "question"]
         )
 
         self.qa_chain = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type="stuff",
             retriever=self.vectorstore.as_retriever(search_kwargs={"k": 5}),
-            chain_type_kwargs={"prompt": prompt}
+            chain_type_kwargs={"prompt": prompt},
         )
         print("✓ QA chain ready")
         return True
@@ -115,9 +114,9 @@ Answer:"""
         if not self.setup_qa_chain():
             return
 
-        print("\n" + "="*60)
+        print("\n" + "=" * 60)
         print("Medical Knowledge Base - Interactive Mode")
-        print("="*60)
+        print("=" * 60)
         print("Type 'quit' or 'exit' to stop\n")
 
         while True:

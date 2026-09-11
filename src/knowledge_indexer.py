@@ -23,7 +23,7 @@ os.environ["OTEL_SDK_DISABLED"] = "true"
 class OllamaEmbeddingFunction(EmbeddingFunction):
     """Wrapper for OllamaEmbeddings that matches Chroma's interface."""
 
-    def __init__(self, model_name: str = "mistral"):
+    def __init__(self, model_name: str = "nomic-embed-text"):
         self.embeddings = OllamaEmbeddings(model=model_name)
 
     def __call__(self, input: List[str]) -> List[List[float]]:
@@ -40,8 +40,10 @@ class OllamaEmbeddingFunction(EmbeddingFunction):
                 elapsed = time.time() - start_time
                 rate = i / elapsed
                 remaining = (len(documents) - i) / rate if rate > 0 else 0
-                print(f"  [{i}/{len(documents)}] {rate:.1f} chunks/sec | ETA: {remaining:.0f}s",
-                      flush=True)
+                print(
+                    f"  [{i}/{len(documents)}] {rate:.1f} chunks/sec | ETA: {remaining:.0f}s",
+                    flush=True,
+                )
 
             embeddings.append(self.embeddings.embed_query(doc))
 
@@ -53,7 +55,9 @@ class OllamaEmbeddingFunction(EmbeddingFunction):
 
 
 class KnowledgeIndexer:
-    def __init__(self, markdown_dir: str, index_dir: str, model_name: str = "mistral"):
+    def __init__(
+        self, markdown_dir: str, index_dir: str, model_name: str = "nomic-embed-text"
+    ):
         self.markdown_dir = Path(markdown_dir)
         self.index_dir = Path(index_dir)
         self.index_dir.mkdir(parents=True, exist_ok=True)
@@ -64,7 +68,9 @@ class KnowledgeIndexer:
         """Load all markdown documents."""
         print(f"Loading markdown files from {self.markdown_dir}...")
         docs = [
-            Document(page_content=p.read_text(encoding="utf-8"), metadata={"source": str(p)})
+            Document(
+                page_content=p.read_text(encoding="utf-8"), metadata={"source": str(p)}
+            )
             for p in sorted(self.markdown_dir.glob("*.md"))
         ]
         print(f"Loaded {len(docs)} documents\n")
@@ -74,13 +80,13 @@ class KnowledgeIndexer:
         """Split documents into larger chunks to reduce embedding time."""
         print("Splitting documents into chunks...")
         splitter = RecursiveCharacterTextSplitter(
-            chunk_size=2000,
-            chunk_overlap=300,
-            separators=["\n\n", "\n", ". ", " ", ""]
+            chunk_size=2000, chunk_overlap=300, separators=["\n\n", "\n", ". ", " ", ""]
         )
         chunks = splitter.split_documents(docs)
         print(f"Created {len(chunks)} chunks")
-        print(f"Estimated embedding time: {len(chunks) * 1.5 / 60:.0f}-{len(chunks) * 2 / 60:.0f} minutes\n")
+        print(
+            f"Estimated embedding time: {len(chunks) * 1.5 / 60:.0f}-{len(chunks) * 2 / 60:.0f} minutes\n"
+        )
         return chunks
 
     def create_index(self):
@@ -102,20 +108,22 @@ class KnowledgeIndexer:
                 documents=chunks,
                 embedding=self.embedding_function,
                 persist_directory=str(self.index_dir),
-                collection_name="medical_knowledge"
+                collection_name="medical_knowledge",
             )
 
             elapsed = time.time() - start_time
             print(f"\n✓ Index successfully saved to {self.index_dir}")
             print(f"✓ Total chunks indexed: {len(chunks)}")
-            print(f"✓ Time taken: {elapsed:.1f} seconds ({elapsed/60:.1f} minutes)")
+            print(f"✓ Time taken: {elapsed:.1f} seconds ({elapsed / 60:.1f} minutes)")
             return True
 
         except Exception as e:
             print(f"\n✗ Error creating index: {e}")
             print("\nTroubleshooting:")
             print("  1. Make sure 'ollama serve' is running in another terminal")
-            print("  2. Check Ollama has downloaded the model: ollama pull mistral")
+            print(
+                "  2. Check Ollama has downloaded the model: ollama pull nomic-embed-text"
+            )
             print("  3. Wait - embedding is slow on CPU (1-2 seconds per chunk)")
             print("  4. Do NOT kill the process - let it run to completion")
             return False
