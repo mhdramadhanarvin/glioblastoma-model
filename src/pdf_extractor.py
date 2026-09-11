@@ -5,9 +5,26 @@ import os
 import re
 from pathlib import Path
 from typing import Optional
-import pdfplumber
+import pypdfium2
+from concurrent.futures import ProcessPoolExecutor
 from datetime import datetime
 import json
+
+
+def _extract_one(pdf_path: Path) -> tuple[str, Optional[str], Optional[str]]:
+    """Worker: (name, text, error). Runs in a separate process."""
+    doc = None
+    try:
+        doc = pypdfium2.PdfDocument(pdf_path)
+        text = "".join(
+            doc[i].get_textpage().get_text_bounded() for i in range(len(doc))
+        )
+        return pdf_path.name, (text if text.strip() else None), None
+    except Exception as e:
+        return pdf_path.name, None, str(e)
+    finally:
+        if doc is not None:
+            doc.close()
 
 
 class PDFExtractor:
@@ -19,16 +36,11 @@ class PDFExtractor:
         self.rejected = []
 
     def extract_text(self, pdf_path: Path) -> Optional[str]:
-        """Extract text from PDF."""
-        try:
-            text = ""
-            with pdfplumber.open(pdf_path) as pdf:
-                for page in pdf.pages:
-                    text += page.extract_text(x_tolerance=1) or ""
-            return text if text.strip() else None
-        except Exception as e:
-            self.stats["errors"].append(f"{pdf_path.name}: {str(e)}")
-            return None
+        """Extract text from one PDF (single-process path; process_pdfs parallelises)."""
+        _, text, error = _extract_one(pdf_path)
+        if error:
+            self.stats["errors"].append(f"{pdf_path.name}: {error}")
+        return text
 
     def clean_text(self, text: str) -> str:
         """Clean and normalize text."""
@@ -113,37 +125,44 @@ tags: [neurosurgery, glioblastoma, research]
 """
         return markdown
 
-    def process_pdfs(self):
-        """Process all PDFs in directory."""
+    def process_pdfs(self, workers: Optional[int] = None):
+        """Process all PDFs in directory, in parallel across CPU cores.
+
+        PDF text extraction is CPU-bound C++ (PDFium) with no GPU path, so cores
+        are the only lever. Colab gives 2; a local box usually gives more.
+        """
         pdfs = sorted(self.pdf_dir.glob("*.pdf"))
-        print(f"Found {len(pdfs)} PDFs\n")
+        workers = workers or min(os.cpu_count() or 1, len(pdfs) or 1)
+        print(f"Found {len(pdfs)} PDFs | {workers} worker(s)\n")
 
-        for i, pdf_path in enumerate(pdfs, 1):
-            print(f"[{i}/{len(pdfs)}] {pdf_path.name}...", end=" ", flush=True)
-            self.stats["total"] += 1
+        with ProcessPoolExecutor(max_workers=workers) as pool:
+            results = pool.map(_extract_one, pdfs, chunksize=4)
 
-            text = self.extract_text(pdf_path)
-            if not text:
-                print("❌ extraction failed")
-                self.stats["failed"] += 1
-                continue
+            for i, ((name, text, error), pdf_path) in enumerate(zip(results, pdfs), 1):
+                print(f"[{i}/{len(pdfs)}] {name}...", end=" ", flush=True)
+                self.stats["total"] += 1
 
-            text = self.clean_text(text)
+                if error:
+                    self.stats["errors"].append(f"{name}: {error}")
+                if not text:
+                    print("❌ extraction failed")
+                    self.stats["failed"] += 1
+                    continue
 
-            is_valid, reject_reason = self.quality_gate(text, pdf_path)
-            if not is_valid:
-                print(f"⊘ rejected: {reject_reason}")
-                self.stats["rejected"] += 1
-                self.rejected.append({"file": pdf_path.name, "reason": reject_reason})
-                continue
+                text = self.clean_text(text)
 
-            markdown = self.create_markdown(pdf_path, text)
+                is_valid, reject_reason = self.quality_gate(text, pdf_path)
+                if not is_valid:
+                    print(f"⊘ rejected: {reject_reason}")
+                    self.stats["rejected"] += 1
+                    self.rejected.append({"file": name, "reason": reject_reason})
+                    continue
 
-            output_path = self.output_dir / f"{pdf_path.stem}.md"
-            output_path.write_text(markdown, encoding="utf-8")
+                markdown = self.create_markdown(pdf_path, text)
+                (self.output_dir / f"{pdf_path.stem}.md").write_text(markdown, encoding="utf-8")
 
-            print(f"✓ ({len(text.split())} words)")
-            self.stats["success"] += 1
+                print(f"✓ ({len(text.split())} words)")
+                self.stats["success"] += 1
 
         self._print_report()
 
@@ -173,6 +192,7 @@ if __name__ == "__main__":
 
     pdf_dir = sys.argv[1] if len(sys.argv) > 1 else "pdfs"
     output_dir = sys.argv[2] if len(sys.argv) > 2 else "data/markdown"
+    workers = int(sys.argv[3]) if len(sys.argv) > 3 else None
 
     extractor = PDFExtractor(pdf_dir, output_dir)
-    extractor.process_pdfs()
+    extractor.process_pdfs(workers=workers)

@@ -11,8 +11,8 @@ def test_imports():
     """Test that all required packages can be imported."""
     print("Testing imports...")
     try:
-        import pdfplumber
-        print("  ✓ pdfplumber")
+        import pypdfium2
+        print("  ✓ pypdfium2")
         import langchain
         print("  ✓ langchain")
         from langchain_community.vectorstores import Chroma

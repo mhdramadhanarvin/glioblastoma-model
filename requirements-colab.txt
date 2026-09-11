@@ -1,6 +1,6 @@
 # Colab: no pin that downgrades the preinstalled stack (numpy 2.x, packaging, requests 2.32.4).
 # langchain-community is deliberately absent: it requires requests>=2.32.5, which google-colab forbids.
-pdfplumber>=0.11
+pypdfium2>=4.0
 langchain-classic>=1.0
 langchain-chroma>=1.0
 langchain-ollama>=1.0

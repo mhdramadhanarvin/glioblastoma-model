@@ -10,7 +10,7 @@ def run_extract(args):
     """Run PDF extraction."""
     from src.pdf_extractor import PDFExtractor
     extractor = PDFExtractor(args.pdf_dir, args.output_dir)
-    extractor.process_pdfs()
+    extractor.process_pdfs(workers=args.workers)
 
 
 def run_index(args):
@@ -37,6 +37,8 @@ def main():
     extract_parser = subparsers.add_parser("extract", help="Extract PDFs to markdown")
     extract_parser.add_argument("--pdf-dir", default="pdfs", help="Directory containing PDFs")
     extract_parser.add_argument("--output-dir", default="data/markdown", help="Output directory for markdown files")
+    extract_parser.add_argument("--workers", type=int, default=None,
+                                help="Parallel extraction processes (default: all CPU cores)")
     extract_parser.set_defaults(func=run_extract)
 
     # Index command
