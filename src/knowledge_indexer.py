@@ -5,10 +5,10 @@ import os
 import sys
 from pathlib import Path
 from typing import List
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import OllamaEmbeddings
-from langchain_community.document_loaders import DirectoryLoader, TextLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_chroma import Chroma
+from langchain_ollama import OllamaEmbeddings
+from langchain_core.documents import Document
 from chromadb.api.types import EmbeddingFunction
 import logging
 import time
@@ -63,13 +63,10 @@ class KnowledgeIndexer:
     def load_documents(self) -> List:
         """Load all markdown documents."""
         print(f"Loading markdown files from {self.markdown_dir}...")
-        loader = DirectoryLoader(
-            str(self.markdown_dir),
-            glob="*.md",
-            loader_cls=TextLoader,
-            loader_kwargs={"encoding": "utf-8"}
-        )
-        docs = loader.load()
+        docs = [
+            Document(page_content=p.read_text(encoding="utf-8"), metadata={"source": str(p)})
+            for p in sorted(self.markdown_dir.glob("*.md"))
+        ]
         print(f"Loaded {len(docs)} documents\n")
         return docs
 
@@ -107,7 +104,6 @@ class KnowledgeIndexer:
                 persist_directory=str(self.index_dir),
                 collection_name="medical_knowledge"
             )
-            vectorstore.persist()
 
             elapsed = time.time() - start_time
             print(f"\n✓ Index successfully saved to {self.index_dir}")

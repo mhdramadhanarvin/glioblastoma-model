@@ -1,0 +1,13 @@
+# Colab: no pin that downgrades the preinstalled stack (numpy 2.x, packaging, requests 2.32.4).
+# langchain-community is deliberately absent: it requires requests>=2.32.5, which google-colab forbids.
+pdfplumber>=0.11
+langchain-classic>=1.0
+langchain-chroma>=1.0
+langchain-ollama>=1.0
+python-dotenv>=1.0
+# google-colab pins requests==2.32.4; hold it so pip does not "upgrade" past it
+requests==2.32.4
+# google-adk caps otel at 1.42.1; chromadb only needs >=1.2
+opentelemetry-api<=1.42.1
+opentelemetry-sdk<=1.42.1
+opentelemetry-exporter-otlp-proto-grpc<=1.42.1
